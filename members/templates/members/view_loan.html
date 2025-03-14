@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h2>Loan Application Details</h2>
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Basic Information</h4>
+                    <table class="table">
+                        <tr>
+                            <th>Full Name</th>
+                            <td>{{ loan.full_name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Date of Birth</th>
+                            <td>{{ loan.dob }}</td>
+                        </tr>
+                        <tr>
+                            <th>Contact Number</th>
+                            <td>{{ loan.contact_number }}</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>{{ loan.email }}</td>
+                        </tr>
+                        <tr>
+                            <th>PAN Card</th>
+                            <td>{{ loan.pan_card }}</td>
+                        </tr>
+                        <tr>
+                            <th>Aadhar Number</th>
+                            <td>{{ loan.aadhar_number }}</td>
+                        </tr>
+                        <tr>
+                            <th>Address</th>
+                            <td>{{ loan.address }}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <h4>Financial Information</h4>
+                    <table class="table">
+                        <tr>
+                            <th>Income Source</th>
+                            <td>{{ loan.income_source }}</td>
+                        </tr>
+                        <tr>
+                            <th>Monthly Income</th>
+                            <td>₹{{ loan.monthly_income }}</td>
+                        </tr>
+                        <tr>
+                            <th>Loan Type</th>
+                            <td>{{ loan.get_loan_type_display }}</td>
+                        </tr>
+                        <tr>
+                            <th>Loan Amount</th>
+                            <td>₹{{ loan.loan_amount }}</td>
+                        </tr>
+                        <tr>
+                            <th>Loan Tenure</th>
+                            <td>{{ loan.loan_tenure }} months</td>
+                        </tr>
+                        <tr>
+                            <th>DSA Code</th>
+                            <td>{{ loan.dsa_code }}</td>
+                        </tr>
+                        <tr>
+                            <th>Status</th>
+                            <td>
+                                <span class="badge {% if loan.status == 'approved' %}bg-success{% elif loan.status == 'rejected' %}bg-danger{% else %}bg-warning{% endif %}">
+                                    {{ loan.status|title }}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Applied On</th>
+                            <td>{{ loan.created_at|date:"M d, Y" }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <h4>Loan Purpose</h4>
+                <p>{{ loan.purpose }}</p>
+            </div>
+
+            {% if loan.documents %}
+            <div class="mt-4">
+                <h4>Documents</h4>
+                <a href="{% url 'serve_loan_document' loan.id %}" class="btn btn-info" target="_blank">View Documents</a>
+            </div>
+            {% endif %}
+
+            <div class="mt-4">
+                {% if loan.status in 'pending,rejected' %}
+                    <a href="{% url 'edit_loan_application' loan.id %}" class="btn btn-primary">Edit Application</a>
+                    <form method="POST" action="{% url 'delete_loan_application' loan.id %}" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this loan application?');">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Delete Application</button>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

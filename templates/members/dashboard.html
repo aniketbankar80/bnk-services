@@ -1,0 +1,224 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - BNK Services{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-6 col-xl-3 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Loans</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_loans }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-file-invoice-dollar fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-3 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Approved Loans</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ approved_loans }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-check-circle fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-3 mb-4">
+        <div class="card border-left-info shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Pending Payouts</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ pending_payouts }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-clock fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-3 mb-4">
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Total Disbursed</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">₹{{ total_disbursed }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-rupee-sign fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-12 col-xl-8 mb-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                <h6 class="m-0 font-weight-bold text-primary">Recent Loan Applications</h6>
+                <a href="{% url 'loan_application' %}" class="btn btn-sm btn-primary">New Application</a>
+            </div>
+            <div class="card-body">
+                <form method="get" class="row mb-3">
+                    <div class="col-md-4">
+                        <input type="text" name="search" class="form-control" placeholder="Search by ID, Name..." value="{{ search_query }}">
+                    </div>
+                    <div class="col-md-3">
+                        <select name="loan_type" class="form-select">
+                            <option value="">All Loan Types</option>
+                            <option value="Personal Loan" {% if selected_loan_type == 'Personal Loan' %}selected{% endif %}>Personal Loan</option>
+                            <option value="Business Loan" {% if selected_loan_type == 'Business Loan' %}selected{% endif %}>Business Loan</option>
+                            <option value="Home Loan" {% if selected_loan_type == 'Home Loan' %}selected{% endif %}>Home Loan</option>
+                            <option value="Vehicle Loan" {% if selected_loan_type == 'Vehicle Loan' %}selected{% endif %}>Vehicle Loan</option>
+                            <option value="Education Loan" {% if selected_loan_type == 'Education Loan' %}selected{% endif %}>Education Loan</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select name="status" class="form-select">
+                            <option value="">All Status</option>
+                            <option value="pending" {% if selected_status == 'pending' %}selected{% endif %}>Pending</option>
+                            <option value="approved" {% if selected_status == 'approved' %}selected{% endif %}>Approved</option>
+                            <option value="rejected" {% if selected_status == 'rejected' %}selected{% endif %}>Rejected</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                    </div>
+                </form>
+
+                {% if loan_applications %}
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Application ID</th>
+                                <th>Name</th>
+                                <th>Loan Type</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for loan in loan_applications %}
+                            <tr>
+                                <td>{{ loan.pan_card }}</td>
+                                <td>{{ loan.full_name }}</td>
+                                <td>{{ loan.loan_type }}</td>
+                                <td>
+                                    <span class="badge bg-{% if loan.status == 'approved' %}success{% elif loan.status == 'rejected' %}danger{% else %}warning{% endif %}">
+                                        {{ loan.status|title }}
+                                    </span>
+                                </td>
+                                <td>{{ loan.created_at|date:"M d, Y" }}</td>
+                                <td>
+                                    <a href="{% url 'view_loan' loan.id %}" class="btn btn-sm btn-info">View</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-4">
+                    <p class="text-muted mb-0">No loan applications found.</p>
+                    {% if search_query or selected_loan_type or selected_status %}
+                    <p class="text-muted">Try adjusting your search criteria.</p>
+                    {% else %}
+                    <p class="mt-2">
+                        <a href="{% url 'loan_application' %}" class="btn btn-primary">
+                            <i class="fas fa-plus-circle"></i> Apply for a Loan
+                        </a>
+                    </p>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-xl-4 mb-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                <h6 class="m-0 font-weight-bold text-primary">Recent Payout Requests</h6>
+                <a href="{% url 'payout_request' %}" class="btn btn-sm btn-primary">New Request</a>
+            </div>
+            <div class="card-body">
+                {% if payout_requests %}
+                <div class="table-responsive">
+                    <table class="table table-bordered" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Customer</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for request in payout_requests %}
+                            <tr>
+                                <td>{{ request.application_number }}</td>
+                                <td>{{ request.customer_name }}</td>
+                                <td>
+                                    <span class="badge bg-{% if request.status == 'approved' %}success{% elif request.status == 'rejected' %}danger{% else %}warning{% endif %}">
+                                        {{ request.status|title }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="{% url 'view_payout' request.id %}" class="btn btn-sm btn-info">View</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-4">
+                    <p class="text-muted mb-0">No payout requests found.</p>
+                    <p class="mt-2">
+                        <a href="{% url 'payout_request' %}" class="btn btn-primary">
+                            <i class="fas fa-plus-circle"></i> Request Payout
+                        </a>
+                    </p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.border-left-primary { border-left: 4px solid var(--bs-primary); }
+.border-left-success { border-left: 4px solid var(--bs-success); }
+.border-left-info { border-left: 4px solid var(--bs-info); }
+.border-left-warning { border-left: 4px solid var(--bs-warning); }
+.bg-pending-subtle { background-color: var(--bs-warning-bg-subtle); }
+.bg-approved-subtle { background-color: var(--bs-success-bg-subtle); }
+.bg-rejected-subtle { background-color: var(--bs-danger-bg-subtle); }
+.text-pending { color: var(--bs-warning); }
+.text-approved { color: var(--bs-success); }
+.text-rejected { color: var(--bs-danger); }
+</style>
+{% endblock %}

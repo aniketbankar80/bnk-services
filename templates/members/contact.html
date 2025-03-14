@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact Us - BNK Services{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <h1 class="display-4 mb-4 text-center">Contact Us</h1>
+            
+            <!-- Contact Information -->
+            <div class="row mb-5">
+                <div class="col-md-4 text-center mb-4 mb-md-0">
+                    <div class="p-4 border rounded shadow-sm h-100">
+                        <i class="fas fa-phone fa-2x text-primary mb-3"></i>
+                        <h3 class="h5">Phone</h3>
+                        <p class="mb-0">+91 9112758218</p>
+                        <p class="text-muted">Monday - Friday <br>11:00 AM - 6:00 PM</p>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center mb-4 mb-md-0">
+                    <div class="p-4 border rounded shadow-sm h-100">
+                        <i class="fas fa-envelope fa-2x text-primary mb-3"></i>
+                        <h3 class="h5">Email</h3>
+                        <p class="mb-0">support@bnkservices.com</p>
+                        <p class="text-muted">24/7 Online Support</p>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center">
+                    <div class="p-4 border rounded shadow-sm h-100">
+                        <i class="fas fa-map-marker-alt fa-2x text-primary mb-3"></i>
+                        <h3 class="h5">Location</h3>
+                        <p class="mb-0">Shirur</p>
+                        <p class="text-muted">Mah,412210</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <h2 class="h3 mb-4">Send us a Message</h2>
+                    <form>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Your Name</label>
+                            <input type="text" class="form-control" id="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="subject" class="form-label">Subject</label>
+                            <input type="text" class="form-control" id="subject" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea class="form-control" id="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="mt-5">
+                <h2 class="h3 mb-4">Frequently Asked Questions</h2>
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item">
+                        <h3 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                How can I track my loan application?
+                            </button>
+                        </h3>
+                        <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                You can track your loan application through your dashboard after logging into your account.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h3 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                What documents do I need for a loan application?
+                            </button>
+                        </h3>
+                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Required documents typically include ID proof, address proof, income proof, and bank statements.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

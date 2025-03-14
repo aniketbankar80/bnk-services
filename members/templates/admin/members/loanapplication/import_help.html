@@ -1,0 +1,112 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h2>Import Loan Applications</h2>
+        </div>
+        <div class="card-body">
+            <div class="alert alert-info">
+                <h4 class="alert-heading">Import Instructions</h4>
+                <p>Please follow these guidelines when importing loan applications:</p>
+                <ul>
+                    <li>Use CSV or Excel format (.csv, .xlsx)</li>
+                    <li>Ensure all required fields are filled</li>
+                    <li>Follow the date format: YYYY-MM-DD</li>
+                    <li>Monetary values should be in numbers only (no currency symbols)</li>
+                </ul>
+            </div>
+
+            <h4>Required Fields</h4>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Field Name</th>
+                        <th>Description</th>
+                        <th>Format/Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>full_name</td>
+                        <td>Customer's full name</td>
+                        <td>John Doe</td>
+                    </tr>
+                    <tr>
+                        <td>dob</td>
+                        <td>Date of Birth</td>
+                        <td>1990-01-31</td>
+                    </tr>
+                    <tr>
+                        <td>contact_number</td>
+                        <td>Contact phone number</td>
+                        <td>9876543210</td>
+                    </tr>
+                    <tr>
+                        <td>email</td>
+                        <td>Email address</td>
+                        <td>john@example.com</td>
+                    </tr>
+                    <tr>
+                        <td>pan_card</td>
+                        <td>PAN Card number</td>
+                        <td>ABCDE1234F</td>
+                    </tr>
+                    <tr>
+                        <td>aadhar_number</td>
+                        <td>Aadhar Card number</td>
+                        <td>123456789012</td>
+                    </tr>
+                    <tr>
+                        <td>address</td>
+                        <td>Full residential address</td>
+                        <td>123 Main St, City, State</td>
+                    </tr>
+                    <tr>
+                        <td>income_source</td>
+                        <td>Source of income</td>
+                        <td>Salary/Business/Self-employed</td>
+                    </tr>
+                    <tr>
+                        <td>monthly_income</td>
+                        <td>Monthly income amount</td>
+                        <td>50000</td>
+                    </tr>
+                    <tr>
+                        <td>loan_type</td>
+                        <td>Type of loan</td>
+                        <td>personal/home/vehicle/education</td>
+                    </tr>
+                    <tr>
+                        <td>loan_amount</td>
+                        <td>Requested loan amount</td>
+                        <td>500000</td>
+                    </tr>
+                    <tr>
+                        <td>loan_tenure</td>
+                        <td>Loan tenure in months</td>
+                        <td>24</td>
+                    </tr>
+                    <tr>
+                        <td>purpose</td>
+                        <td>Purpose of the loan</td>
+                        <td>Home renovation</td>
+                    </tr>
+                    <tr>
+                        <td>dsa_code</td>
+                        <td>DSA Code (if applicable)</td>
+                        <td>DSA123</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="mt-4">
+                <h4>Download Sample Files</h4>
+                <a href="{% url 'download_sample_csv' %}" class="btn btn-primary">Download CSV Template</a>
+                <a href="{% url 'download_sample_excel' %}" class="btn btn-success">Download Excel Template</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

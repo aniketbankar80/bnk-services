@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Payout Request Details</h5>
+                    <a href="{% url 'dashboard' %}" class="btn btn-secondary btn-sm">
+                        <i class="fas fa-arrow-left me-1"></i> Back to Dashboard
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h6 class="text-muted">Request Information</h6>
+                            <dl class="row">
+                                <dt class="col-sm-4">DSA Code</dt>
+                                <dd class="col-sm-8">{{ payout.dsa_code }}</dd>
+
+                                <dt class="col-sm-4">Application Number</dt>
+                                <dd class="col-sm-8">{{ payout.application_number }}</dd>
+
+                                <dt class="col-sm-4">Customer Name</dt>
+                                <dd class="col-sm-8">{{ payout.customer_name }}</dd>
+
+                                <dt class="col-sm-4">Customer Mobile</dt>
+                                <dd class="col-sm-8">{{ payout.customer_mobile }}</dd>
+
+                                <dt class="col-sm-4">Disburse Amount</dt>
+                                <dd class="col-sm-8">₹{{ payout.disburse_amount }}</dd>
+
+                                <dt class="col-sm-4">Status</dt>
+                                <dd class="col-sm-8">
+                                    {% if payout.status == 'pending' %}
+                                        <span class="badge bg-warning text-dark">Pending</span>
+                                    {% elif payout.status == 'approved' %}
+                                        <span class="badge bg-success">Approved</span>
+                                    {% elif payout.status == 'rejected' %}
+                                        <span class="badge bg-danger">Rejected</span>
+                                    {% endif %}
+                                </dd>
+
+                                <dt class="col-sm-4">Location</dt>
+                                <dd class="col-sm-8">{{ payout.location }}</dd>
+
+                                <dt class="col-sm-4">Requested On</dt>
+                                <dd class="col-sm-8">{{ payout.created_at|date:"M d, Y" }}</dd>
+                            </dl>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-muted">Payment Details</h6>
+                            <dl class="row">
+                                <dt class="col-sm-4">Bank Name</dt>
+                                <dd class="col-sm-8">{{ payout.bank_name }}</dd>
+
+                                <dt class="col-sm-4">UPI ID</dt>
+                                <dd class="col-sm-8">{{ payout.upi_id }}</dd>
+
+                                <dt class="col-sm-4">Customer PAN Card</dt>
+                                <dd class="col-sm-8">{{ payout.customer_pan_card }}</dd>
+                            </dl>
+                        </div>
+                    </div>
+
+                    {% if payout.notes %}
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h6 class="text-muted">Notes</h6>
+                            <p class="mb-0">{{ payout.notes }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h6 class="text-muted">Application Screenshot</h6>
+                            {% if payout.application_screenshot %}
+                            <p>
+                                <a href="{{ payout.application_screenshot.url }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-image me-1"></i> View Application Screenshot
+                                </a>
+                            </p>
+                            {% else %}
+                            <p class="text-muted">No application screenshot attached</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    {% if payout.status == 'pending' or payout.status == 'rejected' %}
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex gap-2">
+                                <a href="{% url 'edit_payout' payout.id %}" class="btn btn-primary">
+                                    <i class="fas fa-edit me-1"></i> Edit Request
+                                </a>
+                                <a href="{% url 'delete_payout' payout.id %}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this payout request?');">
+                                    <i class="fas fa-trash me-1"></i> Delete Request
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

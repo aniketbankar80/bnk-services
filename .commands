@@ -1,0 +1,6 @@
+venv\Scripts\activate.ps1 
+pip install -r requirements.txt
+python manage.py makemigrations members admin_portal
+python manage.py migrate
+
+aws s3api put-bucket-cors --bucket bnk-data --cors-configuration file://cors.json
