@@ -20,8 +20,8 @@ class LoanDocumentStorage(FileSystemStorage):
     media/loan_documents/[Member Name]/[Customer Name]/[filename]
     """
     def __init__(self, *args, **kwargs):
-        kwargs.setdefault('location', os.path.join(settings.MEDIA_ROOT, 'loan_documents'))
-        kwargs.setdefault('base_url', os.path.join(settings.MEDIA_URL, 'loan_documents/'))
+        kwargs.setdefault('location', os.path.join(settings.MEDIA_ROOT, 'media/loan_documents'))
+        kwargs.setdefault('base_url', os.path.join(settings.MEDIA_URL, 'media/loan_documents/'))
         super().__init__(*args, **kwargs)
     
     def get_valid_name(self, name):
