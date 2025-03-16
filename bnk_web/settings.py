@@ -207,7 +207,9 @@ INTERNAL_IPS = [
 CSRF_TRUSTED_ORIGINS = [
     'https://*.ngrok-free.app',
     'https://*.ngrok.io',
-    'https://*.ngrok.app'
+    'https://*.ngrok.app',
+    'https://*.serveo.net',
+    'https://*.bnk.rest'
 ]
 
 # Additional CSRF Settings
