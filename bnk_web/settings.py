@@ -209,7 +209,7 @@ CSRF_TRUSTED_ORIGINS = [
     'https://*.ngrok.io',
     'https://*.ngrok.app',
     'https://*.serveo.net',
-    'https://*.bnk.rest'
+    'https://bnk.rest'
 ]
 
 # Additional CSRF Settings
