@@ -8,7 +8,7 @@ class MemberProfileResource(resources.ModelResource):
     class Meta:
         model = MemberProfile
         fields = ('user__username', 'user__email', 'user__first_name', 'user__last_name',
-                 'phone_number', 'date_of_birth', 'street_address', 'city', 'state', 'zip_code',
+                 'phone_number', 'date_of_birth', 'address', 'city', 'state', 'zip_code',
                  'profile_picture', 'created_at', 'updated_at')
         export_order = fields
 
