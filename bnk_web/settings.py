@@ -213,9 +213,14 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 # Additional CSRF Settings
-CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = False if DEBUG else True  # Only require secure cookies in production
 CSRF_USE_SESSIONS = True
 CSRF_COOKIE_HTTPONLY = True
+
+# Session Settings
+SESSION_COOKIE_AGE = 86400 * 7  # 7 days in seconds
+SESSION_COOKIE_SECURE = False if DEBUG else True  # Only require secure cookies in production
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
