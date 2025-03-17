@@ -221,6 +221,7 @@ CSRF_COOKIE_HTTPONLY = True
 SESSION_COOKIE_AGE = 86400 * 7  # 7 days in seconds
 SESSION_COOKIE_SECURE = False if DEBUG else True  # Only require secure cookies in production
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_SAVE_EVERY_REQUEST = True
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
